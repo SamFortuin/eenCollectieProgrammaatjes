@@ -1,7 +1,5 @@
 from string import ascii_lowercase,ascii_uppercase
 from random import randint, choice, shuffle
-from tokenize import Triple
-from turtle import color
 from shortcuts import intConvert,coloredText,color
 
 
@@ -60,4 +58,3 @@ def main(numbered=True, debug=False):
         main()
 
 main()
-
