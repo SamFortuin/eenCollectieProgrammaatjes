@@ -1,87 +1,59 @@
 from string import ascii_lowercase,ascii_uppercase
-from random import randint, shuffle
+from random import randint, choice, shuffle
+from tokenize import Triple
+from turtle import color
+from shortcuts import intConvert,coloredText,color
 
-def intConvert(num):
-    numConvert1 = False
-    numConvert2 = True
-    alphabet = list(ascii_lowercase) #creates list of lowercase alphabet
-    for i in range(10):
-        if str(i) in num:
-            numConvert1 = True
-    for x in range(26):
-        if alphabet[x] in num: #checks if a letter is present in the arg
-            numConvert2 = False
-    if numConvert1 and numConvert2: #skips == True because of if logic
-        return int(num)
-    else:
-        return num
 
-def addScpecialChars():
-    global todo, outlist, specialChars
+def addScpecialChars(outList, debug):
+    #adds 3 special chars
     specialChars = ['@','#','$','%','&','_','?']
     for i in range(3):
-        outList.append(specialChars[randint(0,6)])
-        todo -= 1
-
-def addUpperCase():
-    global todo, outList
-    upperCase = list(ascii_uppercase)
+        outList.append(choice(specialChars))
+    
+def addUpperCase(outList, debug):
+    #adds between 2 and 6 upper case chars
     for i in range(randint(2,6)):
-        outList.append(upperCase[randint(0,25)])
-        todo -= 1
+        outList.append(choice(ascii_uppercase))
 
-def addNumbers():
-    global todo, outList, nums
-    nums = [0,1,2,3,4,5,6,7,8,9]
+def addNumbers(outList, debug):
+    #adds between 4 and 7 numbers
+    nums = list(range(10))
     for i in range(randint(4,7)):
-        outList.append(nums[randint(0,9)])
-        todo -= 1
+        outList.append(choice(nums))
 
-def addLowerCase():
-    global todo, outList
-    lowerCase = list(ascii_lowercase)
-    for i in range(todo):
-        outList.append(lowerCase[randint(0,25)])
-        todo -= 1
+def addLowerCase(outList, debug):
+    for i in range(20-len(outList)):
+        outList.append(choice(ascii_lowercase))
 
-def createPasswd(times):
-    global outList, todo
-    passwdList = []
-    for i in range(times):
-        outList = []
-        todo = 24
-        addScpecialChars()
-        addUpperCase()
-        addNumbers()
+def createPasswd(inList, debug):
+    passwdList,inList = [],[]
+    addScpecialChars(inList,debug)
+    addUpperCase(inList,debug)
+    addNumbers(inList,debug)
+    addLowerCase(inList,debug)
 
-        shuffle(outList)
+    for i in range(choice(list(range(10)))):
+        shuffle(inList)
 
-        todo -= 4
-        addLowerCase()
+    for i in range(3):
+        inList.insert(0,choice(ascii_lowercase))
+    inList.append(choice(ascii_lowercase))
 
-        for i in range(randint(1,9)):
-            shuffle(outList)
+    outlist = inList
+    return outlist
 
-        todo = 3
-        addLowerCase()
 
-        for i in range(3):
-            outList[i],outList[len(outList)-(i+1)] = outList[len(outList)-(i+1)], outList[i]
-
-        todo = 1
-        addLowerCase()
-
-        passwdList.append(outList)
-
-    return passwdList
-
-def main():
+def main(numbered=True, debug=False):
+    mainList,temp = [],[]
     amount = intConvert(input('hoeveel wachtwoorden wilt u?\n'))
     if isinstance(amount,int) and amount > 0:
-        mainList = createPasswd(amount)
         s = '' if amount < 2 else 's'
-        print(f'generated password{s}:')
+        print(coloredText('\n', color.YELLOW, f'generated password{s}:'))
         for i in range(amount):
+            mainList.append(createPasswd(temp,debug))
+            if numbered:
+                mainList[i].insert(0,f'{i+1}. ')
             print(*mainList[i],sep='')
     else:
         print('invalid input')
