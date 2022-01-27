@@ -24,8 +24,8 @@ def addLowerCase(outList, debug):
     for i in range(20-len(outList)):
         outList.append(choice(ascii_lowercase))
 
-def createPasswd(inList, debug):
-    passwdList,inList = [],[]
+def createPasswd(debug):
+    inList = [] #creates blank list
     addScpecialChars(inList,debug)
     addUpperCase(inList,debug)
     addNumbers(inList,debug)
@@ -43,13 +43,13 @@ def createPasswd(inList, debug):
 
 
 def main(numbered=True, debug=False):
-    mainList,temp = [],[]
+    mainList = []
     amount = intConvert(input('hoeveel wachtwoorden wilt u?\n'))
     if isinstance(amount,int) and amount > 0:
         s = '' if amount < 2 else 's'
         print(coloredText('\n', color.YELLOW, f'generated password{s}:'))
         for i in range(amount):
-            mainList.append(createPasswd(temp,debug))
+            mainList.append(createPasswd(debug))
             if numbered:
                 mainList[i].insert(0,f'{i+1}. ')
             print(*mainList[i],sep='')
