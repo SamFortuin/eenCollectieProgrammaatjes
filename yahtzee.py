@@ -40,7 +40,7 @@ def fancyDice(diceNum=5):
     }
 
     for i in range(5): #5 is for the 5 lines that de dice art requires
-        for args in diceRoll: #loops through the list entries
+        for args in diceRoll:
             stdout.write(diceDict[i+1][args])
             stdout.write('   ')
         stdout.write('\n')
@@ -69,4 +69,5 @@ def rollDice(num):
 if __name__ == '__main__':
     # print(rollDice(5))
     # displayScore(scoreBoard)
-    fancyDice(16)
+    fancyDice()
+    fancyDice(2)
