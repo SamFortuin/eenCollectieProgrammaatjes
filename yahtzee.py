@@ -1,11 +1,9 @@
-# import numpy as np
 from ast import Num
 from asyncore import write
 from string import ascii_uppercase, capwords
 from sys import stdout
 from shortcuts import intConvert, coloredText, color
 from random import randint
-# import json
 
 #[X] fill dict with combo's
 #[X] make 5 dice
@@ -26,11 +24,8 @@ scoreBoard = {
 "yahtzee":0
 }
 
-def fancyDice(diceNum=5):
-    diceRoll = []
-    for i in range(diceNum):
-        diceRoll.append(randint(1,6))
-        
+def fancyDice(*inDice):
+    #[ ]zero base dict so the +1 in the write isn't needed anymore
     diceDict = {
     1:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '},
     2:{1:'|       |',2:'| o     |',3:'| o     |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
@@ -40,11 +35,10 @@ def fancyDice(diceNum=5):
     }
 
     for i in range(5): #5 is for the 5 lines that de dice art requires
-        for args in diceRoll:
-            stdout.write(diceDict[i+1][args])
+        for args in inDice:
+            stdout.write(diceDict[i+1][args])#writes the current line (i) of the passed in dice value
             stdout.write('   ')
         stdout.write('\n')
-        
 
 def displayScore(scoreBoardIn):
     for x,y in scoreBoardIn.items():    
@@ -60,14 +54,15 @@ def printScoreboard(passDict):
 
 
 def rollDice(num):
-    diceDict = {}
+    diceList = []
     for i in range(num):
-        diceString = f'dice {i+1}'
-        diceDict.update({diceString:randint(1,6)})
-    return diceDict
+        diceList.append(randint(1,6))
+    return diceList
+
+def main():
+    pass
 
 if __name__ == '__main__':
-    # print(rollDice(5))
-    # displayScore(scoreBoard)
-    fancyDice()
-    fancyDice(2)
+    a = rollDice(5)
+    # a = [1,2,3,4,5,6]
+    fancyDice(*a)
