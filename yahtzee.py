@@ -9,49 +9,40 @@ from random import randint
 #[X] make 5 dice
 
 scoreBoard = {
-"ones":0,
-"twos":0,
-"threes":0,
-"fours":0,
-"fives":0,
-"sixes":0,
-"three of a kind":0,
-"four of a kind":0,
-"full house":0,
-"small straight":0,
-"large straight":0,
-"chance":0,
-"yahtzee":0
+    "ones":0,
+    "twos":0,
+    "threes":0,
+    "fours":0,
+    "fives":0,
+    "sixes":0,
+    "three of a kind":0,
+    "four of a kind":0,
+    "full house":0,
+    "small straight":0,
+    "large straight":0,
+    "chance":0,
+    "yahtzee":0
 }
 
 def fancyDice(*inDice):
-    #[ ]zero base dict so the +1 in the write isn't needed anymore
+    #[X]zero base dict so the +1 in the write isn't needed anymore
     diceDict = {
-    1:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '},
-    2:{1:'|       |',2:'| o     |',3:'| o     |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
-    3:{1:'|   o   |',2:'|       |',3:'|   o   |',4:'|       |',5:'|   o   |',6:'| o   o |'},
-    4:{1:'|       |',2:'|     o |',3:'|     o |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
-    5:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '}
+    0:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '},
+    1:{1:'|       |',2:'| o     |',3:'| o     |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
+    2:{1:'|   o   |',2:'|       |',3:'|   o   |',4:'|       |',5:'|   o   |',6:'| o   o |'},
+    3:{1:'|       |',2:'|     o |',3:'|     o |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
+    4:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '}
     }
 
     for i in range(5): #5 is for the 5 lines that de dice art requires
         for args in inDice:
-            stdout.write(diceDict[i+1][args])#writes the current line (i) of the passed in dice value
-            stdout.write('   ')
+            stdout.write(diceDict[i][args])#writes the current line (i) of the passed in dice value
+            stdout.write('     ')
         stdout.write('\n')
 
 def displayScore(scoreBoardIn):
-    for x,y in scoreBoardIn.items():    
-        print(f'{x}: {y}') if y > 0 else print(f'{x}:')
-
-def printScoreboard(passDict):
-    if isinstance(passDict,dict):
-        for x,y in passDict.items():
-            stdout.write(f'{capwords(x)}: ')
-            stdout.write(str(y)+'\n') if y > 0 else stdout.write('\n') #only writes score if there is a score
-    else:
-        print('passed object is not a dict')
-
+    for x,y in scoreBoardIn.items():
+        print(f'{capwords(x)}: {y}') if y > 0 else print(f'{capwords(x)}:')
 
 def rollDice(num):
     diceList = []
@@ -63,6 +54,9 @@ def main():
     pass
 
 if __name__ == '__main__':
-    a = rollDice(5)
-    # a = [1,2,3,4,5,6]
-    fancyDice(*a)
+    for i in range(5):
+        a = rollDice(5)
+        # a = [1,2,3,4,5,6]
+        fancyDice(*a)
+        print('\n') if i < 4 else None
+        # displayScore(scoreBoard)
