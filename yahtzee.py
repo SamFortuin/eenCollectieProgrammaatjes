@@ -1,9 +1,8 @@
-from ast import Num
-from asyncore import write
 from string import ascii_uppercase, capwords
 from sys import stdout
-from shortcuts import intConvert, coloredText, color
+from shortcuts import intConvert, coloredText, color, clearScreen
 from random import randint
+from os import system
 
 #[X] fill dict with combo's
 #[X] make 5 dice
@@ -27,11 +26,11 @@ scoreBoard = {
 def fancyDice(*inDice):
     #[X]zero base dict so the +1 in the write isn't needed anymore
     diceDict = {
-    0:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '},
-    1:{1:'|       |',2:'| o     |',3:'| o     |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
-    2:{1:'|   o   |',2:'|       |',3:'|   o   |',4:'|       |',5:'|   o   |',6:'| o   o |'},
-    3:{1:'|       |',2:'|     o |',3:'|     o |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
-    4:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '}
+        0:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '},
+        1:{1:'|       |',2:'| o     |',3:'| o     |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
+        2:{1:'|   o   |',2:'|       |',3:'|   o   |',4:'|       |',5:'|   o   |',6:'| o   o |'},
+        3:{1:'|       |',2:'|     o |',3:'|     o |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
+        4:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '}
     }
 
     for i in range(5): #5 is for the 5 lines that de dice art requires
@@ -49,14 +48,34 @@ def rollDice(num):
     for i in range(num):
         diceList.append(randint(1,6))
     return diceList
+   
 
-def main():
-    pass
+def gameLoop():
+    hand = []
+    i = 0
+    while i < 3:
+        # fancyDice(1,2,3,4,5,6) # test dice
+        a = rollDice(5-len(hand))
+        print('rolled dice:')
+        fancyDice(*a)
+        if len(hand) > 0:
+            print('\ndice in hand:')
+            fancyDice(*hand)
+        keepDice = input('\nwhich dice do you want to keep?\n')
+
+        keptList = keepDice.replace(' ','').split(',')
+
+        for x in keptList:
+            if x.isdigit() and int(x) < 7 and int(x) > 0:
+                indexList = keptList.index(x)
+                keptList[indexList] = int(x)
+                hand.append(keptList[indexList])
+            else:
+                print('invalid')
+        i+=1
+        clearScreen(0.1)
+        # print(hand)
+    print(hand)
 
 if __name__ == '__main__':
-    for i in range(5):
-        a = rollDice(5)
-        # a = [1,2,3,4,5,6]
-        fancyDice(*a)
-        print('\n') if i < 4 else None
-        # displayScore(scoreBoard)
+    gameLoop()
