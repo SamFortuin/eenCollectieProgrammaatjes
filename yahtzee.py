@@ -4,9 +4,6 @@ from shortcuts import intConvert, coloredText, color, clearScreen
 from random import randint
 from os import system
 
-#[X] fill dict with combo's
-#[X] make 5 dice
-
 scoreBoard = {
     "ones":0,
     "twos":0,
@@ -32,12 +29,13 @@ def fancyDice(*inDice):
         3:{1:'|       |',2:'|     o |',3:'|     o |',4:'| o   o |',5:'| o   o |',6:'| o   o |'},
         4:{1:' ------- ',2:' ------- ',3:' ------- ',4:' ------- ',5:' ------- ',6:' ------- '}
     }
-
+    
     for i in range(5): #5 is for the 5 lines that de dice art requires
         for args in inDice:
             stdout.write(diceDict[i][args])#writes the current line (i) of the passed in dice value
             stdout.write('     ')
         stdout.write('\n')
+        
 
 def displayScore(scoreBoardIn):
     for x,y in scoreBoardIn.items():
@@ -51,9 +49,9 @@ def rollDice(num):
    
 
 def gameLoop():
-    hand = []
-    i = 0
-    while i < 3:
+    r'''#!old code
+    loopNum = 0
+    while loopNum < 3:
         # fancyDice(1,2,3,4,5,6) # test dice
         a = rollDice(5-len(hand))
         print('rolled dice:')
@@ -72,10 +70,42 @@ def gameLoop():
                 hand.append(keptList[indexList])
             else:
                 print('invalid')
-        i+=1
+        
+        y = 0
+        for x in keptList:
+            if isinstance(x,int):
+                y += 1
+            # elif 
+        if y == len(keptList):
+            loopNum+=1
+        else:
+            print('a')
         clearScreen(0.1)
-        # print(hand)
     print(hand)
+    '''
+    hand = []
+    nextRoll = True
+    # for i in range(1):
+    for i in range(3):#3 for the three dice throws
+        rolledDice = rollDice(5-len(hand))
+        fancyDice(*rolledDice)
+        while True:
+            keep = input("\nWhich dice do you want to keep?\n").split(",")
+            for x in keep:
+                try:
+                    indexDice = keep.index(x)
+                    keep[indexDice] = int(x)
+                    nextRoll = True
+                except ValueError:
+                    print('invalid input')
+                    nextRoll = False
+                    break
+            if not nextRoll:
+                continue
+            print(keep)
+            break
+
+
 
 if __name__ == '__main__':
     gameLoop()

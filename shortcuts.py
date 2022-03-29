@@ -1,5 +1,6 @@
 #print slow from sabastion on stackoverflow, good lad
 from string import ascii_lowercase
+from this import d
 from serial import Serial, SerialException
 from time import sleep
 from sys import stdout
@@ -57,7 +58,7 @@ def slowPrint(str):
 #     sleep(sleepTime)
 #     system("cls")
 
-clearScreen = lambda sleeptime: sleep(sleeptime); system('cls')
+clearScreen = lambda sleeptime: sleep(sleeptime); system('cls') 
 
 def intConvert(num):
     Check1 = False
