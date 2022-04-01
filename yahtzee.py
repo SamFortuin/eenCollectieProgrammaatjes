@@ -88,9 +88,13 @@ def gameLoop():
     # for i in range(1):
     for i in range(3):#3 for the three dice throws
         rolledDice = rollDice(5-len(hand))
+        print('Rolled dice')
         fancyDice(*rolledDice)
         while True:
-            keep = input("\nWhich dice do you want to keep?\n").split(",")
+            if len(hand) > 0:
+                print('Your dice')
+                fancyDice(*hand)
+            keep = input('\nWhich dice do you want to keep?\n').replace(' ','').split(',')
             for x in keep:
                 try:
                     indexDice = keep.index(x)
@@ -102,10 +106,15 @@ def gameLoop():
                     break
             if not nextRoll:
                 continue
-            print(keep)
+            for x in keep:
+                hand.append(x)
+            print(hand)
             break
 
-
+#[ ] append hand combo's to scoreboard
+#GOOGLE how to find combo's in list of integers
+#GOOGLE class explination and can it be used to append to a dict inside a (class)function
+ 
 
 if __name__ == '__main__':
     gameLoop()
